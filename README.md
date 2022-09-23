@@ -1,2 +1,2 @@
-# peg-project
-Yet another 2d graphics engine project
+# PEG 🪵 PROJECT
+Yet another 2d graphics framework project
