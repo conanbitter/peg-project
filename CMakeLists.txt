@@ -10,6 +10,8 @@ find_package(glfw REQUIRED)
 
 add_executable(peg
     src/main.cpp
+    src/appwindow.hpp
+    src/appwindow.cpp
 )
 
 target_include_directories(peg
