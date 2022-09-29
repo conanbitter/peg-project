@@ -1,7 +1,7 @@
 #include "appwindow.hpp"
 
 int main() {
-    peg::AppWindow app;
+    peg::AppWindow& app = peg::AppWindow::GetInstance();
     app.SetSize(1280, 720);
     app.SetTitle("Example");
     app.SetStyle(peg::WindowStyle::Resizable);

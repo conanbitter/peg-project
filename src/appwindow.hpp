@@ -24,11 +24,20 @@ class AppWindow {
     WindowStyle mStyle = WindowStyle::Resizable;
     bool mVsync = true;
 
+    AppWindow(){};
+
    public:
     double frameTime = 1.0 / 60.0;
     bool Init();
     void Run();
     ~AppWindow();
+
+    AppWindow(AppWindow const&) = delete;
+    void operator=(AppWindow const&) = delete;
+    static AppWindow& GetInstance() {
+        static AppWindow instance;
+        return instance;
+    }
 
     std::pair<int, int> GetSize() const { return mSize; }
     std::string GetTitle() const { return mTitle; }
