@@ -6,6 +6,8 @@
 
 namespace peg {
 
+class AppWindow;
+
 enum class WindowStyle {
     Resizable,
     NonResizable,
@@ -14,8 +16,25 @@ enum class WindowStyle {
     BorderlessFullscreen
 };
 
+class Scene {
+    friend class AppWindow;
+
+   private:
+    bool loaded = false;
+
+   protected:
+    const AppWindow& app;
+
+   public:
+    Scene(AppWindow& appWindow);
+    virtual void OnLoad() {}
+    virtual void OnUpdate(double timeDelta) {}
+    virtual void OnDraw(double alpha) {}
+};
+
 class AppWindow {
    private:
+    Scene dummyScene;
     bool mIsInited = false;
     bool mIsRunning = false;
     GLFWwindow* mWindow;
@@ -23,8 +42,11 @@ class AppWindow {
     std::string mTitle = "peg|project";
     WindowStyle mStyle = WindowStyle::Resizable;
     bool mVsync = true;
+    Scene* currentScene;
 
-    AppWindow(){};
+    AppWindow() : dummyScene(*this) {
+        currentScene = &dummyScene;
+    };
 
    public:
     double frameTime = 1.0 / 60.0;
@@ -49,6 +71,8 @@ class AppWindow {
     void SetTitle(const std::string title);
     void SetStyle(WindowStyle style);
     void SetVsync(bool vsync);
+
+    void SetScene(Scene& scene);
 };
 
 }  // namespace peg

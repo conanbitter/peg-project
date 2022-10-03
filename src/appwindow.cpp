@@ -46,7 +46,9 @@ void AppWindow::Run() {
     mIsRunning = true;
 
     while (!glfwWindowShouldClose(mWindow) && mIsRunning) {
+        currentScene->OnUpdate(0.0);
         glClear(GL_COLOR_BUFFER_BIT);
+        currentScene->OnDraw(0.0);
         glfwSwapBuffers(mWindow);
         glfwPollEvents();
     }
@@ -75,3 +77,13 @@ void AppWindow::SetStyle(WindowStyle style) {
 void AppWindow::SetVsync(bool vsync) {
     mVsync = vsync;
 }
+
+void AppWindow::SetScene(Scene& scene) {
+    currentScene = &scene;
+    if (!scene.loaded) {
+        scene.OnLoad();
+        scene.loaded = true;
+    }
+}
+
+Scene::Scene(AppWindow& appWindow) : app{appWindow} {}
